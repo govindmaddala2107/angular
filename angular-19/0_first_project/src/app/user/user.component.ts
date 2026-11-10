@@ -8,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class UserComponent {
 
+  username: string = "govindmaddala";
+  job: string = "Consultant";
+
 }

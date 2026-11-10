@@ -1,0 +1,34 @@
+<div>
+  <div>Data Binding</div>
+  <hr />
+  <h2>One Way Data Binding</h2>
+  <h3>Interpolation-Type</h3>
+  <h4>User: {{ username }}</h4>
+  <p>Job: {{ job }}</p>
+  <input
+    type="text"
+    name="propertyBindingValue"
+    value="{{ interPolationValue }}"
+  />
+
+  <br /><br />
+  <h3>Property Binding</h3>
+  <input
+    type="text"
+    name="propertyBindingValue"
+    [value]="propertyBindingValue"
+  />
+  <br /><br />
+  <h3>Event Binding</h3>
+  <button (click)="clickMe()">Click Me</button>
+
+  <br /><br />
+  <h2>Two Way Data Binding</h2>
+  <h3>Using NgModel</h3>
+  <input type="text" name="user-content" [(ngModel)]="content" />
+  <br /><br />
+  <div>
+    <div>User Content:</div>
+    <div>{{ content }}</div>
+  </div>
+</div>
