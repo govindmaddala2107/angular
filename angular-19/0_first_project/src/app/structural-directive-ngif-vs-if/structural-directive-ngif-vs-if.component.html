@@ -1,0 +1,78 @@
+<div class="">
+  <b>App structural directive ngif vs if</b>
+</div>
+
+<hr />
+<div class="mb-5">
+  <h3>Using ngIf</h3>
+  <div class="d-flex text-center">
+    <div class="col-4">
+      <div>
+        <input type="checkbox" id="terms" (change)="onCheck()" />
+        <label for="terms">Terms & Conditions</label>
+      </div>
+      <div *ngIf="isChecked">
+        <button class="btn btn-success">Submit</button>
+      </div>
+    </div>
+    <div class="col-4">
+      <input type="text" [value]="inputValue" *ngIf="showInputBox" />
+      <button class="btn btn-secondary" (click)="handleShowInput(true)">
+        Show Input
+      </button>
+      <button class="btn btn-danger" (click)="handleShowInput(false)">
+        Hide Input
+      </button>
+    </div>
+    <div class="col-4">
+      <input type="text" [(ngModel)]="input1" />
+      <input type="text" [(ngModel)]="input2" />
+
+      <span *ngIf="!input1 && !input2">Inputs are empty.</span>
+      <span *ngIf="(input1 || input2) && input1 === input2"
+        >Both are same.</span
+      >
+      <span *ngIf="(input1 || input2) && input1 !== input2"
+        >Both are not same.</span
+      >
+    </div>
+  </div>
+</div>
+<br /><br /><br />
+<div class="mb-5">
+  <h3>Using If</h3>
+  <div class="d-flex text-center">
+    <div class="col-4">
+      <div>
+        <input type="checkbox" id="terms" (change)="onCheck()" />
+        <label for="terms">Terms & Conditions</label>
+      </div>
+      @if (isChecked) {
+        <button class="btn btn-success">Submit</button>
+      }
+    </div>
+    <div class="col-4">
+      @if (showInputBox) {
+        <input type="text" [value]="inputValue" />
+      }
+      <button class="btn btn-secondary" (click)="handleShowInput(true)">
+        Show Input
+      </button>
+      <button class="btn btn-danger" (click)="handleShowInput(false)">
+        Hide Input
+      </button>
+    </div>
+    <div class="col-4">
+      <input type="text" [(ngModel)]="input1" />
+      <input type="text" [(ngModel)]="input2" />
+
+      @if (!input1 && !input2) {
+        <span>Inputs are empty.</span>
+      } @else if ((input1 || input2) && input1 === input2) {
+        <span>Both are same.</span>
+      } @else {
+        <span>Both are not same.</span>
+      }
+    </div>
+  </div>
+</div>
