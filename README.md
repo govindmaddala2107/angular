@@ -385,94 +385,129 @@
 - #### *ngSwitch vs @switch():
     - Angular provides conditional rendering using:
 
-    - `*ngIf` (Traditional Structural Directive)
-    - `@if` (New Control Flow Syntax introduced in Angular 17+)
+    - `*ngSwitch` (Traditional Structural Directive)
+    - `@switch` (New Control Flow Syntax introduced in Angular 17+)
     - Both are used to conditionally add or remove elements from the DOM based on a boolean expression.
-    - For `*ngIf` required import is 
+    - For `*ngSwitch` required import is 
         ```typescript
-        import { CommonModule, NgIf } from '@angular/common';
+        import { CommonModule, NgSwitch } from '@angular/common';
         ```
-        and keep either CommonModule or NgIf in imports array but for **@if()** no need of any imports.
-    - Component is same for both `*ngIf` and `@if` and is:
+        and keep either CommonModule or NgSwitch in imports array but for **@switch()** no need of any imports.
+    - Component is same for both `*ngSwitch` and `@switch` and is:
         ```typescript
-        import { CommonModule, NgIf } from '@angular/common';
-        @Component({
-            selector: 'app-structural-directive-ngif-vs-if',
-            imports: [NgIf],
-            templateUrl: './structural-directive-ngif-vs-if.component.html',
-            styleUrl: './structural-directive-ngif-vs-if.component.css'
-        })
-        export class StructuralDirectiveNgifVsIfComponent {
-            input1: string = "";
-            input2: string = "";
-            isChecked: boolean = false;
+        import { CommonModule } from '@angular/common';
+        import { Component } from '@angular/core';
 
-            onCheck() {
-                this.isChecked = !this.isChecked;
+        @Component({
+            selector: 'app-structural-directive-ng-switch-vs-switch',
+            imports: [CommonModule],
+            templateUrl: './structural-directive-ng-switch-vs-switch.component.html',
+            styleUrl: './structural-directive-ng-switch-vs-switch.component.css'
+        })
+        export class StructuralDirectiveNgSwitchVsSwitchComponent {
+
+            ngSwitchGrade: number = 0;
+            switchGrade: number = 0;
+
+            ngSwitchGradeSet(grade: number) {
+                this.ngSwitchGrade = grade;
             }
+
+            switchGradeSet(grade: number) {
+                this.switchGrade = grade;
+            }
+
         }
         ```
-    - HTML Syntax of `*ngIf`:
+    - HTML Syntax of `*ngSwitch`:
         ```html
-        <!-- Using direct boolean -->
-        <div class="col-4">
+        <div class="mb-5">
+            <h3>*ngSwitch Example: {{ ngSwitchGrade }}</h3>
+            <!-- Set ngSwitchGrade = 1 -->
+            <button class="btn btn-primary m-2" (click)="ngSwitchGradeSet(1)">
+                1<sup>st</sup> Grade
+            </button>
+
+            <!-- Set ngSwitchGrade = 2 -->
+            <button class="btn btn-secondary m-2" (click)="ngSwitchGradeSet(2)">
+                2<sup>nd</sup> Grade
+            </button>
+
+            <!-- Set ngSwitchGrade = 3 -->
+            <button class="btn btn-success m-2" (click)="ngSwitchGradeSet(3)">
+                3<sup>rd</sup> Grade
+            </button>
+
             <div>
-                <input type="checkbox" id="terms" (change)="onCheck()" />
-                <label for="terms">Terms & Conditions</label>
+                <!-- Switch -->
+                <div [ngSwitch]="ngSwitchGrade">
+                    <!-- Case: 1 -->
+                    <div *ngSwitchCase="1">
+                        🎉 Congrats on reaching 1<sup>st</sup> Grade! Wishing you a wonderful
+                        start to your learning journey! 🌟
+                    </div>
+
+                    <!-- Case: 2 -->
+                    <div *ngSwitchCase="2">
+                        🎈 Congrats on making it to 2<sup>nd</sup> Grade! Keep up the amazing
+                        work and curiosity! 📚
+                    </div>
+
+                    <!-- Case: 3 -->
+                    <div *ngSwitchCase="3">
+                        🏆 Congrats on advancing to 3<sup>rd</sup> Grade! You are going to do
+                        great things this year! ✨
+                    </div>
+                    <!-- Default -->
+                    <div *ngSwitchDefault>Results yet to publish.</div>
+                </div>
             </div>
-            <div *ngIf="isChecked">
-                <button class="btn btn-success">Submit</button>
-            </div>
-        </div>
-
-        <!-- Using normal true false condtions like string equal and all -->
-        <div class="col-4">
-            <input type="text" [(ngModel)]="input1" />
-            <input type="text" [(ngModel)]="input2" />
-
-            <!-- When Both are empty -->
-            <span *ngIf="!input1 && !input2">Inputs are empty.</span>
-
-            <!-- When any one is not empty and check if both are equal -->
-            <span *ngIf="(input1 || input2) && input1 === input2"
-                >Both are same.</span
-            >
-            <!-- When any one is not empty and check if both are not equal -->
-            <span *ngIf="(input1 || input2) && input1 !== input2"
-                >Both are not same.</span
-            >
         </div>
         ```
-    - HTML Syntax for `@if()`:
+    - HTML Syntax for `@switch()`:
         ```html
-        <!-- Using direct boolean -->
-        <div class="col-4">
+        <div class="mb-5">
+            <h3>switch example: {{ switchGrade }}</h3>
+            <!-- Set switchGrade = 1 -->
+            <button class="btn btn-primary m-2" (click)="switchGradeSet(1)">
+                1<sup>st</sup> Grade
+            </button>
+
+            <!-- Set switchGrade = 2 -->
+            <button class="btn btn-secondary m-2" (click)="switchGradeSet(2)">
+                2<sup>nd</sup> Grade
+            </button>
+
+            <!-- Set switchGrade = 3 -->
+            <button class="btn btn-success m-2" (click)="switchGradeSet(3)">
+                3<sup>rd</sup> Grade
+            </button>
             <div>
-                <input type="checkbox" id="terms" (change)="onCheck()" />
-                <label for="terms">Terms & Conditions</label>
+                <div>
+                    <!-- Switch -->
+                    @switch (switchGrade) {
+                        <!-- Case: 1 -->
+                        @case (1) {
+                            🎉 Congrats on reaching 1<sup>st</sup> Grade! Wishing you a wonderful
+                            start to your learning journey! 🌟
+                        }
+                        <!-- Case: 2 -->
+                        @case (2) {
+                            🎈 Congrats on making it to 2<sup>nd</sup> Grade! Keep up the amazing
+                            work and curiosity! 📚
+                        }
+                        <!-- Case: 3 -->
+                        @case (3) {
+                            🏆 Congrats on advancing to 3<sup>rd</sup> Grade! You are going to do
+                            great things this year! ✨
+                        }
+                        <!-- Default -->
+                        @default {
+                            Results yet to publish.
+                        }
+                    }
+                </div>
             </div>
-            @if (isChecked) {
-                <button class="btn btn-success">Submit</button>
-            }
-        </div>
-
-        <!-- Using normal true false condtions like string equal and all -->
-        <div class="col-4">
-            <input type="text" [(ngModel)]="input1" />
-            <input type="text" [(ngModel)]="input2" />
-
-            <!-- When Both are empty -->
-            @if (!input1 && !input2) {
-                <span>Inputs are empty.</span>
-            } 
-            <!-- When any one is not empty and check if both are equal -->
-            @else if ((input1 || input2) && input1 === input2) {
-                <span>Both are same.</span>
-            } 
-            <!-- When any one is not empty and check if both are not equal i.e as else condition -->
-            @else {
-                <span>Both are not same.</span>
-            }
         </div>
         ```
 

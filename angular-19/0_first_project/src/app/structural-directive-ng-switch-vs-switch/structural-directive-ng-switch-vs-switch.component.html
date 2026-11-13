@@ -1,0 +1,69 @@
+<div>
+  <b>App structural directive ngSwitch vs switch</b>
+</div>
+
+<hr />
+<div class="mb-5">
+  <h3>*ngSwitch Example: {{ ngSwitchGrade }}</h3>
+  <button class="btn btn-primary m-2" (click)="ngSwitchGradeSet(1)">
+    1<sup>st</sup> Grade
+  </button>
+  <button class="btn btn-secondary m-2" (click)="ngSwitchGradeSet(2)">
+    2<sup>nd</sup> Grade
+  </button>
+  <button class="btn btn-success m-2" (click)="ngSwitchGradeSet(3)">
+    3<sup>rd</sup> Grade
+  </button>
+
+  <div>
+    <div [ngSwitch]="ngSwitchGrade">
+      <div *ngSwitchCase="1">
+        🎉 Congrats on reaching 1<sup>st</sup> Grade! Wishing you a wonderful
+        start to your learning journey! 🌟
+      </div>
+      <div *ngSwitchCase="2">
+        🎈 Congrats on making it to 2<sup>nd</sup> Grade! Keep up the amazing
+        work and curiosity! 📚
+      </div>
+      <div *ngSwitchCase="3">
+        🏆 Congrats on advancing to 3<sup>rd</sup> Grade! You are going to do
+        great things this year! ✨
+      </div>
+      <div *ngSwitchDefault>Results yet to publish.</div>
+    </div>
+  </div>
+</div>
+
+<div class="mb-5">
+  <h3>switch example: {{ switchGrade }}</h3>
+  <button class="btn btn-primary m-2" (click)="switchGradeSet(1)">
+    1<sup>st</sup> Grade
+  </button>
+  <button class="btn btn-secondary m-2" (click)="switchGradeSet(2)">
+    2<sup>nd</sup> Grade
+  </button>
+  <button class="btn btn-success m-2" (click)="switchGradeSet(3)">
+    3<sup>rd</sup> Grade
+  </button>
+  <div>
+    <div>
+      @switch (switchGrade) {
+        @case (1) {
+          🎉 Congrats on reaching 1<sup>st</sup> Grade! Wishing you a wonderful
+          start to your learning journey! 🌟
+        }
+        @case (2) {
+          🎈 Congrats on making it to 2<sup>nd</sup> Grade! Keep up the amazing
+          work and curiosity! 📚
+        }
+        @case (3) {
+          🏆 Congrats on advancing to 3<sup>rd</sup> Grade! You are going to do
+          great things this year! ✨
+        }
+        @default {
+          Results yet to publish.
+        }
+      }
+    </div>
+  </div>
+</div>
