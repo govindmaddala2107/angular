@@ -194,11 +194,205 @@
     - `*ngIf` (Traditional Structural Directive)
     - `@if` (New Control Flow Syntax introduced in Angular 17+)
     - Both are used to conditionally add or remove elements from the DOM based on a boolean expression.
-    - For both required import is 
+    - For `*ngIf` required import is 
         ```typescript
         import { CommonModule, NgIf } from '@angular/common';
         ```
-        and keep either CommonModule or NgIf in imports array.
+        and keep either CommonModule or NgIf in imports array but for **@if()** no need of any imports.
+    - Component is same for both `*ngIf` and `@if` and is:
+        ```typescript
+        import { CommonModule, NgIf } from '@angular/common';
+        @Component({
+            selector: 'app-structural-directive-ngif-vs-if',
+            imports: [NgIf],
+            templateUrl: './structural-directive-ngif-vs-if.component.html',
+            styleUrl: './structural-directive-ngif-vs-if.component.css'
+        })
+        export class StructuralDirectiveNgifVsIfComponent {
+            input1: string = "";
+            input2: string = "";
+            isChecked: boolean = false;
+
+            onCheck() {
+                this.isChecked = !this.isChecked;
+            }
+        }
+        ```
+    - HTML Syntax of `*ngIf`:
+        ```html
+        <!-- Using direct boolean -->
+        <div class="col-4">
+            <div>
+                <input type="checkbox" id="terms" (change)="onCheck()" />
+                <label for="terms">Terms & Conditions</label>
+            </div>
+            <div *ngIf="isChecked">
+                <button class="btn btn-success">Submit</button>
+            </div>
+        </div>
+
+        <!-- Using normal true false condtions like string equal and all -->
+        <div class="col-4">
+            <input type="text" [(ngModel)]="input1" />
+            <input type="text" [(ngModel)]="input2" />
+
+            <!-- When Both are empty -->
+            <span *ngIf="!input1 && !input2">Inputs are empty.</span>
+
+            <!-- When any one is not empty and check if both are equal -->
+            <span *ngIf="(input1 || input2) && input1 === input2"
+                >Both are same.</span
+            >
+            <!-- When any one is not empty and check if both are not equal -->
+            <span *ngIf="(input1 || input2) && input1 !== input2"
+                >Both are not same.</span
+            >
+        </div>
+        ```
+    - HTML Syntax for `@if()`:
+        ```html
+        <!-- Using direct boolean -->
+        <div class="col-4">
+            <div>
+                <input type="checkbox" id="terms" (change)="onCheck()" />
+                <label for="terms">Terms & Conditions</label>
+            </div>
+            @if (isChecked) {
+                <button class="btn btn-success">Submit</button>
+            }
+        </div>
+
+        <!-- Using normal true false condtions like string equal and all -->
+        <div class="col-4">
+            <input type="text" [(ngModel)]="input1" />
+            <input type="text" [(ngModel)]="input2" />
+
+            <!-- When Both are empty -->
+            @if (!input1 && !input2) {
+                <span>Inputs are empty.</span>
+            } 
+            <!-- When any one is not empty and check if both are equal -->
+            @else if ((input1 || input2) && input1 === input2) {
+                <span>Both are same.</span>
+            } 
+            <!-- When any one is not empty and check if both are not equal i.e as else condition -->
+            @else {
+                <span>Both are not same.</span>
+            }
+        </div>
+        ```
+
+
+
+- #### *ngFor vs @for():
+    - Angular provides conditional rendering using:
+    - `*ngFor` (Traditional Structural Directive)
+    - `@for` (New Control Flow Syntax introduced in Angular 17+)
+    - Both are used to render array of elements.
+    - For `*ngFor` required import is 
+        ```typescript
+        import { CommonModule, NgFor } from '@angular/common';
+        ```
+        and keep either CommonModule or NgFor in imports array but for **@for()** no need of any imports.
+    - Also in @for(), track is mandatory which could help in change particular element only when some state is changed. It helps in enhancing performance where this track is optional in  `*ngFor`.
+    - Component is same for both `*ngFor` and `@for` and is:
+        ```typescript
+        import { CommonModule, NgFor } from '@angular/common';
+        @Component({
+            selector: 'app-structural-directive-ng-for-vs-for',
+            imports: [CommonModule],
+            templateUrl: './structural-directive-ng-for-vs-for.component.html',
+            styleUrl: './structural-directive-ng-for-vs-for.component.css'
+        })
+        export class StructuralDirectiveNgForVsForComponent {
+            employeeDetails: any[] = [
+                {
+                    "id": 101,
+                    "name": "Aarav Sharma",
+                    "email": "aarav.sharma@example.com",
+                    "department": "Engineering"
+                },
+                {
+                    "id": 102,
+                    "name": "Priya Nair",
+                    "email": "priya.nair@example.com",
+                    "department": "Product Management"
+                }
+            ];
+            names: any[] = [];
+        }
+        ```
+    - HTML Syntax of `*ngFor`:
+        ```html
+        <div>
+            <select name="employees" id="employees">
+                <option 
+                    [value]="emp.email" 
+                    *ngFor="let emp of employeeDetails"
+                >
+                    {{ emp.name }}
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <table>
+                <tbody id="employee-table-body">
+                    <tr *ngFor="let emp of employeeDetails">
+                        <td>{{ emp.id }}</td>
+                        <td>{{ emp.name }}</td>
+                        <td>{{ emp.email }}</td>
+                        <td>{{ emp.department }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        ```
+    - HTML Syntax for `@if()`:
+        ```html
+        <!-- Using direct boolean -->
+        <div class="col-4">
+            <div>
+                <input type="checkbox" id="terms" (change)="onCheck()" />
+                <label for="terms">Terms & Conditions</label>
+            </div>
+            @if (isChecked) {
+                <button class="btn btn-success">Submit</button>
+            }
+        </div>
+
+        <!-- Using normal true false condtions like string equal and all -->
+        <div class="col-4">
+            <input type="text" [(ngModel)]="input1" />
+            <input type="text" [(ngModel)]="input2" />
+
+            <!-- When Both are empty -->
+            @if (!input1 && !input2) {
+                <span>Inputs are empty.</span>
+            } 
+            <!-- When any one is not empty and check if both are equal -->
+            @else if ((input1 || input2) && input1 === input2) {
+                <span>Both are same.</span>
+            } 
+            <!-- When any one is not empty and check if both are not equal i.e as else condition -->
+            @else {
+                <span>Both are not same.</span>
+            }
+        </div>
+        ```
+
+
+- #### *ngSwitch vs @switch():
+    - Angular provides conditional rendering using:
+
+    - `*ngIf` (Traditional Structural Directive)
+    - `@if` (New Control Flow Syntax introduced in Angular 17+)
+    - Both are used to conditionally add or remove elements from the DOM based on a boolean expression.
+    - For `*ngIf` required import is 
+        ```typescript
+        import { CommonModule, NgIf } from '@angular/common';
+        ```
+        and keep either CommonModule or NgIf in imports array but for **@if()** no need of any imports.
     - Component is same for both `*ngIf` and `@if` and is:
         ```typescript
         import { CommonModule, NgIf } from '@angular/common';

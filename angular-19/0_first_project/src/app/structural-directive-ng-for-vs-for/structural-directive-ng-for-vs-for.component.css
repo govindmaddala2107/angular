@@ -1,0 +1,35 @@
+table {
+  width: 60%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+}
+
+th,
+td {
+  border: 1px solid #dddddd;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+.even-row {
+  background-color: #0a95ec;
+  color: white;
+}
+
+.odd-row {
+  background-color: #727171;
+}
+
+.first-row {
+  border-top: 2px solid #2b6cb0;
+  font-weight: bold;
+}
+
+.last-row {
+  border-bottom: 2px solid #2b6cb0;
+}

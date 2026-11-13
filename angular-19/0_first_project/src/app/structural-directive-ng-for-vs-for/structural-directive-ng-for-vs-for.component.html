@@ -1,0 +1,132 @@
+<div class="">
+  <b>App structural directive ngFor vs for</b>
+</div>
+
+<hr />
+<div class="mb-5">
+  <h3>Using ngFor</h3>
+  <div class="d-flex text-center">
+    <div class="col-4">
+      <select name="employees" id="employees">
+        <option [value]="emp.email" *ngFor="let emp of employeeDetails">
+          {{ emp.name }}
+        </option>
+      </select>
+    </div>
+    <div class="col-4">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+          </tr>
+        </thead>
+        <tbody id="employee-table-body">
+          <tr *ngFor="let emp of employeeDetails">
+            <td>{{ emp.id }}</td>
+            <td>{{ emp.name }}</td>
+            <td>{{ emp.email }}</td>
+            <td>{{ emp.department }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-4"></div>
+  </div>
+</div>
+
+<br /><br /><br />
+
+<div class="mb-5">
+  <h3>Using for</h3>
+  <div class="column text-center">
+    <div class="col-1">
+      <select name="employees" id="employees">
+        @for (emp of employeeDetails; track emp) {
+          <option [value]="emp.email">
+            {{ emp.name }}
+          </option>
+        }
+      </select>
+    </div>
+    <div class="col-5">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+          </tr>
+        </thead>
+        <tbody id="employee-table-body">
+          @for (emp of employeeDetails; track emp) {
+            <tr>
+              <td>{{ emp.id }}</td>
+              <td>{{ emp.name }}</td>
+              <td>{{ emp.email }}</td>
+              <td>{{ emp.department }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6">
+      <table>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Row Status / Metadata</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (
+            emp of employeeDetails;
+            track emp.id;
+            let f = $first, l = $last, e = $even, o = $odd, c = $count, i = $index
+          ) {
+            <!-- Apply CSS classes based on $even, $odd, $first, and $last -->
+            <tr
+              [class.even-row]="e"
+              [class.odd-row]="o"
+              [class.first-row]="f"
+              [class.last-row]="l"
+            >
+              <!-- Using $index (i) and $count (c) -->
+              <td>{{ i + 1 }}</td>
+              <td>{{ emp.id }}</td>
+              <td>{{ emp.name }}</td>
+              <td>{{ emp.email }}</td>
+              <td>{{ emp.department }}</td>
+
+              <!-- Using $first (f), $last (l), $even (e), and $odd (o) -->
+              <td>
+                @if (f) {
+                  <span>🥇 First Employee</span>
+                } @else if (l) {
+                  <span>🏁 Last Employee</span>
+                } @else {
+                  <span>{{ e ? "Even Index" : "Odd Index" }}</span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    @for (name of names; track name) {
+      <p>{{ name }}</p>
+    } @empty {
+      <p>No Data Found.</p>
+    }
+  </div>
+</div>
